@@ -1,8 +1,12 @@
 package edu.neu.coe.info6205.threesum;
 
+import edu.neu.coe.info6205.util.Stopwatch;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Implementation of ThreeSum which follows the approach of dividing the solution-space into
@@ -83,6 +87,31 @@ public class ThreeSumQuadratic implements ThreeSum {
         }
         // FIXME : for each candidate, test if a[i] + a[j] + a[k] = 0.
         return triples;
+    }
+
+    public static void main(String[] args) {
+        Supplier<int[]> intsSupplier = new Source(1300, 1000).intsSupplier(10);
+        int[] ints = intsSupplier.get();
+//        System.out.println("ints: " + Arrays.toString(ints));
+        System.out.println("ints length: " + ints.length);
+
+        // For Quadratic
+        ThreeSum target = new ThreeSumQuadratic(ints);
+        Stopwatch start = new Stopwatch();
+        Triple[] triplesQuadratic = target.getTriples();
+        long lap = start.lap();
+        System.out.println(lap + " lap in ms");
+        start.close();
+        System.out.println(triplesQuadratic.length+ " Length of Triple Quardratic");
+        System.out.println("\n");
+        // For Cubic
+        ThreeSum target2 = new ThreeSumCubic(ints);
+        Stopwatch start2 = new Stopwatch();
+        Triple[] triplesCubic = target2.getTriples();
+        long lap2 = start2.lap();
+        System.out.println(lap2 + " lap2 in ms");
+        start2.close();
+        System.out.println(triplesCubic.length+" Length of Triple Cubic");
     }
 
     private final int[] a;
