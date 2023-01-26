@@ -1,5 +1,6 @@
 package edu.neu.coe.info6205.threesum;
 
+import edu.neu.coe.info6205.util.Stopwatch;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -151,6 +152,33 @@ public class ThreeSumTest {
         Triple[] triplesQuadratic = target.getTriples();
         Triple[] triplesCubic = new ThreeSumCubic(ints).getTriples();
         assertEquals(triplesCubic.length, triplesQuadratic.length);
+    }
+
+    @Test
+    public void testGetTriplesKTimer13() {
+        Supplier<int[]> intsSupplier = new Source(500, 1000).intsSupplier(10);
+        int[] ints = intsSupplier.get();
+        System.out.println("ints: " + Arrays.toString(ints));
+        System.out.println("ints length: " + ints.length);
+
+        // For Quadratic
+        ThreeSum target = new ThreeSumQuadratic(ints);
+        Stopwatch start = new Stopwatch();
+        Triple[] triplesQuadratic = target.getTriples();
+        long lap = start.lap();
+        System.out.println(lap + " lap in ms");
+        start.close();
+        System.out.println(triplesQuadratic.length);
+        System.out.println("\n");
+
+        // For Cubic
+        ThreeSum target2 = new ThreeSumCubic(ints);
+        Stopwatch start2 = new Stopwatch();
+        Triple[] triplesCubic = target2.getTriples();
+        long lap2 = start2.lap();
+        System.out.println(lap2 + " lap2 in ms");
+        start2.close();
+        System.out.println(triplesCubic.length);
     }
 
 }

@@ -32,13 +32,56 @@ public class ThreeSumQuadratic implements ThreeSum {
     /**
      * Get a list of Triples such that the middle index is the given value j.
      *
-     * @param j the index of the middle value.
+     * @param i the index of the middle value.
      * @return a Triple such that
      */
-    public List<Triple> getTriples(int j) {
+    public List<Triple> getTriples(int i) {
         List<Triple> triples = new ArrayList<>();
         // FIXME : for each candidate, test if a[i] + a[j] + a[k] = 0.
-        // END 
+        int j = i+1;
+        int k = length-1;
+
+
+        if (length > 3) {
+            while(j<k) {
+                if (a[i] + a[j] + a[k] == 0) {
+                    Triple newTriple = new Triple(a[i], a[j], a[k]);
+                    triples.add(newTriple);
+                    ++j;
+                    while (j > i+1 && a[j] == a[j-1]) {
+                        ++j;
+                        continue;
+                    }
+                } else if (a[i] + a[j] + a[k] < 0){
+                    ++j;
+                } else if (a[i] + a[j] + a[k] > 0){
+                    --k;
+                    if (j == k && i >= 0) {
+                        --i;
+                        if (i < 0) {
+                            break;
+                        }
+                        j = i+1;
+                        k = length - 1;
+
+                    } else if (i < 0) {
+                        break;
+                    }
+
+                }
+            }
+        } else if (length == 3) {
+            if (i%2 == 1) {
+                j = i-1;
+                k = length-1;
+
+                if (a[i] + a[j] + a[k] == 0) {
+                    Triple tripleArray = new Triple(a[i], a[j], a[k]);
+                    triples.add(tripleArray);
+                }
+            }
+        }
+        // FIXME : for each candidate, test if a[i] + a[j] + a[k] = 0.
         return triples;
     }
 
