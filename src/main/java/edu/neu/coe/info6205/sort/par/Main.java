@@ -4,10 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
 /**
@@ -23,7 +20,7 @@ public class Main {
         int[] array = new int[2000000];
         ArrayList<Long> timeList = new ArrayList<>();
         for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
+            ParSort.cutoff = 2000 * (j + 1);
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
             long startTime = System.currentTimeMillis();
