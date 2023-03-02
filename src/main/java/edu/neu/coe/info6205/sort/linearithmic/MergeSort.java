@@ -66,14 +66,14 @@ public class MergeSort<X extends Comparable<X>> extends SortWithHelper<X> {
 //            sort(aux, a, from, mid);
 //            sort(aux, a, mid, to);
 //            if (insurance && helper.less(aux, mid - 1, mid)) {
-//                helper.copy(aux, from, a, from, to - from);
+//                helper.copyBlock(aux, from, a, from, to - from);
 ////                helper.incrementCopies(to - from);
 //            } else
 //                merge(aux, a, from, mid, to);
 //        } else {
 //            sort(a, aux, from, mid);
 //            sort(a, aux, mid, to);
-//            helper.copy(a, from, aux, from, to - from);
+//            helper.copyBlock(a, from, aux, from, to - from);
 //            if (insurance && helper.less(a[mid - 1], a[mid])) return;
 //            merge(aux, a, from, mid, to);
 //        }
@@ -125,11 +125,11 @@ public class MergeSort<X extends Comparable<X>> extends SortWithHelper<X> {
     private final InsertionSort<X> insertionSort;
 
     public static void main (String[] args) {
-        int N = 10;
+        int N = 10000;
         InstrumentedHelper<Integer> helper = new InstrumentedHelper<>("MergeSort", Config.setupConfig("true", "0", "1", "", ""));
         MergeSort<Integer> s = new MergeSort<>(helper);
         s.init(N);
-        Integer[] xs = helper.random(Integer.class, r -> r.nextInt(10000));
+        Integer[] xs = helper.random(Integer.class, r -> r.nextInt(100000));
         Benchmark<Boolean> bm = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, 0, N));
         double x = bm.run(true, 20);
         s.sort(xs, 0, N);

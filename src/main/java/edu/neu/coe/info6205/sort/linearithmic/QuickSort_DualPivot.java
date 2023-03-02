@@ -1,6 +1,11 @@
 package edu.neu.coe.info6205.sort.linearithmic;
 
+import edu.neu.coe.info6205.sort.BaseHelper;
 import edu.neu.coe.info6205.sort.Helper;
+import edu.neu.coe.info6205.sort.InstrumentedHelper;
+import edu.neu.coe.info6205.sort.Sort;
+import edu.neu.coe.info6205.util.Benchmark;
+import edu.neu.coe.info6205.util.Benchmark_Timer;
 import edu.neu.coe.info6205.util.Config;
 
 import java.util.ArrayList;
@@ -99,6 +104,41 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
         }
 
         private final Helper<X> helper;
+
+
     }
+    public static void main (String[] args) {
+        int N = 10000;
+//        final Config config = Config.setupConfig("true", "0", "1", "", "");
+//        final BaseHelper<String> helper = new InstrumentedHelper<>("test", config);
+        InstrumentedHelper<Integer> helper = new InstrumentedHelper<>("Quick Sort", Config.setupConfig("true", "0", "1", "", ""));
+
+        QuickSort_DualPivot<Integer> s = new QuickSort_DualPivot<>(helper);
+        s.init(N);
+
+        Integer[] xs = helper.random(Integer.class, r -> r.nextInt(10000));
+
+        Partitioner<Integer> partitioner = s.createPartitioner();
+        List<Partition<Integer>> partitions = partitioner.partition(new Partition<>(xs, 0, xs.length));
+        Partition<Integer> p0 = partitions.get(0);
+        Benchmark<Boolean> bm = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, 0, p0.to, 0));
+        double x = bm.run(true, 20);
+        Partition<Integer> p1 = partitions.get(1);
+        Benchmark<Boolean> bm1 = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, p1.from, p1.to, 0));
+        double x1 = bm.run(true, 20);
+        Partition<Integer> p2 = partitions.get(2);
+        Benchmark<Boolean> bm2 = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, p2.from, N, 0));
+        double x2 = bm.run(true, 20);
+
+        int compares = helper.getCompares();
+        int swaps = helper.getSwaps();
+        int hits = helper.getHits();
+        double time = (x + x1 + x2)/20;
+        System.out.println(compares/20 + " compares");
+        System.out.println(swaps/20 + " swap");
+        System.out.println(hits/20 + " hits");
+        System.out.println(time+ " ns");
+    }
+
 }
 
