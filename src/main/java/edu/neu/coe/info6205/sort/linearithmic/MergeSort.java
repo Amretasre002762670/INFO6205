@@ -130,25 +130,29 @@ public class MergeSort<X extends Comparable<X>> extends SortWithHelper<X> {
     private final InsertionSort<X> insertionSort;
 
     public static void main (String[] args) {
-        int N = 10000;
-        InstrumentedHelper<Integer> helper = new InstrumentedHelper<>("MergeSort", Config.setupConfig("true", "0", "1", "", ""));
+        int N = 1000;
+        InstrumentedHelper<Integer> helper = new InstrumentedHelper<>("MergeSort", Config.setupConfig("true", "0", "0", "", ""));
         MergeSort<Integer> s = new MergeSort<>(helper);
         s.init(N);
-        Integer[] xs = helper.random(Integer.class, r -> r.nextInt(100000));
+        Integer[] xs = helper.random(Integer.class, r -> r.nextInt(200000));
         Benchmark<Boolean> bm = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, 0, N));
         double x = bm.run(true, 20);
-        s.sort(xs, 0, N);
-        System.out.println("-----");
-        for(int i = 0; i<xs.length; i++) {
-            System.out.println(xs[i]);
-        }
-        int compares = helper.getCompares();
-        int swaps = helper.getSwaps();
-        int hits = helper.getHits();
+//        s.sort(xs, 0, N);
+//        System.out.println("-----");
+//        for(int i = 0; i<xs.length; i++) {
+//            System.out.println(xs[i]);
+//        }
+        long compares = helper.getCompares();
+        long swaps = helper.getSwaps();
+        long hits = helper.getHits();
         System.out.println(compares + " compares");
         System.out.println(swaps + " swap");
         System.out.println(hits + " hits");
         System.out.println(x + " ns");
+//        System.out.println(compares/20 + " compares/20");
+//        System.out.println(swaps/20 + " swap/20");
+//        System.out.println(hits/20 + " hits/20");
+//        System.out.println(x/20 + " ns/20");
     }
 }
 
