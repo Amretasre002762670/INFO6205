@@ -148,7 +148,7 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
 //        System.out.println(swaps/20 + " swap/20");
 //        System.out.println(hits/20 + " hits/20");
 //        System.out.println(time/20 + " ns/20");
-        int N = 40000;
+        int N = 14000;
         InstrumentedHelper<Integer> helper = new InstrumentedHelper<>("QuickSort_DualPivot", Config.setupConfig("true", "0", "0", "", ""));
 
         QuickSort_DualPivot<Integer> s = new QuickSort_DualPivot<>(helper);
@@ -163,16 +163,17 @@ public class QuickSort_DualPivot<X extends Comparable<X>> extends QuickSort<X> {
         Partition<Integer> p2 = partitions.get(2);
 
         Benchmark<Boolean> bm = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, 0, p0.to, 0));
-        double x = bm.run(true, 20);
+        double x = bm.run(true, 1);
         Benchmark<Boolean> bm1 = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, p1.from, p1.to, 0));
-        double x1 = bm.run(true, 20);
+        double x1 = bm1.run(true, 1);
         Benchmark<Boolean> bm2 = new Benchmark_Timer<>("random array sort", b -> s.sort(xs, p2.from, N, 0));
-        double x2 = bm.run(true, 20);
+        double x2 = bm2.run(true, 1);
 
         long compares = helper.getCompares();
         long swaps = helper.getSwaps();
         long hits = helper.getHits();
         double time = (x + x1 + x2);
+
         System.out.println(compares + " compares");
         System.out.println(swaps + " swap");
         System.out.println(hits + " hits");
